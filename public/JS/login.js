@@ -14,7 +14,8 @@ form.addEventListener('submit', (evt) => {
   })
     .then((result) => result.json())
     .then((json) => {
-      if (json.status == 'success') {
+      console.log({ json });
+      if (json.status === 'success') {
         location.replace('/');
       }
     });

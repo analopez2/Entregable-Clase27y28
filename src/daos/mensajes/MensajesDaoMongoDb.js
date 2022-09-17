@@ -1,5 +1,5 @@
-import { ContenedorMongoDb } from '../contendores/ContenedorMongoDb.js';
-import { MensajesSchema } from '../models/MensajesSchema.js';
+import { ContenedorMongoDb } from '../../contenedores/ContenedorMongoDb.js';
+import { MensajesSchema } from '../../db/mongoDb/MensajesSchema.js';
 
 class MensajesDaoMongoDb extends ContenedorMongoDb {
   constructor() {

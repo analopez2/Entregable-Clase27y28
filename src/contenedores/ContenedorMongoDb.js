@@ -42,7 +42,11 @@ class ContenedorMongoDb {
 
       newData.timestamp = new Date();
 
-      let updatedElement = await this.model.findOneAndUpdate({ _id: id }, { ...newData }, { new: true });
+      let updatedElement = await this.model.findOneAndUpdate(
+        { _id: id },
+        { ...newData },
+        { new: true },
+      );
 
       return updatedElement;
     } catch (error) {

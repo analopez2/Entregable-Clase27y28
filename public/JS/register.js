@@ -14,6 +14,7 @@ form.addEventListener('submit', (evt) => {
   })
     .then((result) => result.json())
     .then((json) => {
+      console.log({ json });
       if (json.status === 'success') {
         location.replace('/login');
       }
