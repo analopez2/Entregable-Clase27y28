@@ -1,16 +1,17 @@
 import { Router } from 'express';
 import passport from 'passport';
+import { ServerResponse } from '../utils/server.response.js';
 
 const router = Router();
 
 router.post('/register', passport.authenticate('register', { failureRedirect: '/api/sessions/registerfail' }), async (req, res) => {
   console.log(req.user);
-  res.send({ status: 'success', payload: req.user._id });
+  ServerResponse.success(res, req.user._id);
 });
 
 router.get('/registerfail', async (req, res) => {
   console.log('Register failed');
-  res.status(500).send({ status: 'error', error: 'Register failed' });
+  ServerResponse.internalError(res, err);
 });
 
 router.post('/login', passport.authenticate('login', { failureRedirect: '/api/sessions/loginfail' }), async (req, res) => {
@@ -19,18 +20,19 @@ router.post('/login', passport.authenticate('login', { failureRedirect: '/api/se
     email: req.user.email,
     id: req.user._id,
   };
-  res.send({ status: 'success', payload: req.session.user });
+  ServerResponse.success(res, req.session.user);
 });
 
 router.get('/loginfail', async (req, res) => {
-  res.status(500).send({ status: 'error', error: 'Login failed' });
+  console.log('Login failed');
+  ServerResponse.internalError(res, err);
 });
 
 router.get('/logout', async (req, res) => {
   const nombre = req.session?.user?.first_name;
   req.session.destroy((err) => {
-    if (err) return res.status(500).send('error');
-    res.send({ status: 'success', payload: nombre });
+    if (err) return ServerResponse.internalError(res, err);
+    ServerResponse.success(res, nombre);
   });
 });
 

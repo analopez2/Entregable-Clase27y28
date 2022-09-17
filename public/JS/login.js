@@ -1,6 +1,6 @@
 const form = document.getElementById('loginForm');
 
-form.addEventListener('submit', (evt) => {
+form.addEventListener('submit', async (evt) => {
   evt.preventDefault();
   let data = new FormData(form);
   let obj = {};
@@ -15,7 +15,7 @@ form.addEventListener('submit', (evt) => {
     .then((result) => result.json())
     .then((json) => {
       console.log({ json });
-      if (json.status === 'success') {
+      if (json.status === 200) {
         location.replace('/');
       } else {
         alert('USER ERROR LOGIN');

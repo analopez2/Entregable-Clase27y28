@@ -5,63 +5,40 @@ class DbContainer {
   }
 
   async save(element) {
-    try {
-      let lastInsertId = await this.knex.insert(element).into(this.tableName);
-      return lastInsertId[0];
-    } catch (error) {
-      return error;
-    }
+    let lastInsertId = await this.knex.insert(element).into(this.tableName);
+    return lastInsertId[0];
   }
 
   async getAll() {
-    try {
-      let rows = await this.knex.select('*').from(this.tableName);
-      return rows;
-    } catch (error) {
-      return error;
-    }
+    let rows = await this.knex.select('*').from(this.tableName);
+    return rows;
   }
 
   async getById(id) {
-    try {
-      let row = await this.knex
-        .select('*')
-        .from(this.tableName)
-        .where('id', '=', id);
-      return row;
-    } catch (error) {
-      return error;
-    }
+    let row = await this.knex.select('*').from(this.tableName).where('id', '=', id);
+    return row;
   }
 
   async update(element, id) {
-    try {
-      let elementById = await this.getById(id);
-      if (elementById) {
-        await this.knex
-          .from(this.tableName)
-          .where('id', '=', id)
-          .update({ ...element.id, ...element });
+    let elementById = await this.getById(id);
+    if (elementById) {
+      await this.knex
+        .from(this.tableName)
+        .where('id', '=', id)
+        .update({ ...element.id, ...element });
 
-        let elementUpdate = await this.getById(id);
-        return elementUpdate;
-      } else {
-        throw { error: `Element with Id: ${id} not found` };
-      }
-    } catch (error) {
-      return error;
+      let elementUpdate = await this.getById(id);
+      return elementUpdate;
+    } else {
+      throw { error: `Element with Id: ${id} not found` };
     }
   }
 
   async deleteById(id) {
-    try {
-      await this.knex.from(this.tableName).where('id', '=', id).del();
+    await this.knex.from(this.tableName).where('id', '=', id).del();
 
-      let data = await this.getAll();
-      return data;
-    } catch (error) {
-      return error;
-    }
+    let data = await this.getAll();
+    return data;
   }
 }
 

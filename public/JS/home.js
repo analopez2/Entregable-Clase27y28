@@ -5,7 +5,7 @@ btn.addEventListener('click', (evt) => {
     .then((result) => result.json())
     .then((json) => {
       console.log({ json });
-      if (json.status === 'success') {
+      if (json.status === 200) {
         location.replace('/logout');
       }
     });

@@ -20,6 +20,7 @@ import session from 'express-session';
 import passport from 'passport';
 import initializePassport from './config/passport.config.js';
 import { config } from './config/index.js';
+import { ServerResponse } from './utils/server.response.js';
 
 MongoDb.init();
 
@@ -94,9 +95,9 @@ app.post('/api/mensajes', async (req, res) => {
 
     const msjSaved = await MensajesApiMongo.save(mensaje);
 
-    res.send(msjSaved);
+    ServerResponse.success(res, msjSaved);
   } catch (error) {
-    res.status(400).send({ error: error.message });
+    ServerResponse.badRequest(res, error.message);
   }
 });
 
@@ -123,9 +124,9 @@ app.get('/api/mensajes/normalizr', async (req, res) => {
     const size_normalized = JSON.stringify(normalizedMsjObject).length;
     const percentaje = (size_normalized * 100) / size_original;
 
-    res.send({ normalizr: normalizedMsjObject, compression: percentaje });
+    ServerResponse.success(res, { normalizr: normalizedMsjObject, compression: percentaje });
   } catch (error) {
-    res.status(400).send({ error: error.message });
+    ServerResponse.badRequest(res, error.message);
   }
 });
 
@@ -151,9 +152,9 @@ app.get('/api/mensajes/denormalizr', async (req, res) => {
     const denormalizeMsjObject = denormalize(normalizedMsjObject.result, schemaListMensajes, normalizedMsjObject.entities);
 
     console.log(JSON.stringify(denormalizeMsjObject, null, '\t'));
-    res.send(denormalizeMsjObject);
+    ServerResponse.success(res, denormalizeMsjObject);
   } catch (error) {
-    res.status(400).send({ error: error.message });
+    ServerResponse.badRequest(res, error.message);
   }
 });
 
@@ -168,7 +169,8 @@ app.get('/api/productos-test', async (req, res) => {
       res.render('products', { products: productos });
     }
   } catch (error) {
-    res.status(500).send({ status: 'error', error: 'No se pudieron encontrar productos' });
+    console.log(error);
+    ServerResponse.internalError(res, error);
   }
 });
 

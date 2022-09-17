@@ -1,11 +1,7 @@
 import { Router } from 'express';
-import {
-  productNotFound,
-  prorductWasDeleted,
-  invalidBody,
-} from '../consts/index.js';
 import { DbContainer } from '../contenedores/DbContainer.js';
 import { KnexService } from '../services/index.js';
+import { ServerResponse } from '../utils/server.response.js';
 
 const productRouter = Router();
 const ProductApi = new DbContainer(KnexService.KnexMySQL, 'productos');
@@ -14,11 +10,12 @@ productRouter.get('/', async (req, res) => {
   try {
     const response = await ProductApi.getAll();
 
-    if (!response) res.send({ error: productNotFound });
+    if (!response) return ServerResponse.notFound(res);
 
-    res.json(response);
+    ServerResponse.success(res, response);
   } catch (error) {
-    res.json({ error: error.message });
+    console.log(error);
+    ServerResponse.internalError(res, error);
   }
 });
 
@@ -27,15 +24,16 @@ productRouter.post('/', async (req, res) => {
     const { title, price, thumbnail } = req.body;
 
     if ((!title, !price, !thumbnail)) {
-      throw { error: invalidBody };
+      ServerResponse.badRequest(res);
     }
 
     const product = { title, price, thumbnail };
 
     const productSaved = await ProductApi.save(product);
-    res.json(productSaved);
+    ServerResponse.success(res, productSaved);
   } catch (error) {
-    res.json({ error: error.message });
+    console.log(error);
+    ServerResponse.internalError(res, error);
   }
 });
 
@@ -45,13 +43,12 @@ productRouter.get('/:id', async (req, res) => {
 
     const product = await ProductApi.getById(id);
 
-    if (!product) {
-      throw { error: productNotFound };
-    }
+    if (product.length == 0) return ServerResponse.notFound(res);
 
-    res.json(product);
+    ServerResponse.success(res, product);
   } catch (error) {
-    res.json({ error: error.message });
+    console.log(error);
+    ServerResponse.internalError(res, error);
   }
 });
 
@@ -61,16 +58,17 @@ productRouter.put('/:id', async (req, res) => {
     const { title, price, thumbnail } = req.body;
 
     if ((!title, !price, !thumbnail)) {
-      throw { error: invalidBody };
+      ServerResponse.badRequest(res);
     }
 
     const product = { title, price, thumbnail };
 
     const productUpdate = await ProductApi.update(product, id);
 
-    res.json(productUpdate);
+    ServerResponse.success(res, productUpdate);
   } catch (error) {
-    res.json({ error: error.message });
+    console.log(error);
+    ServerResponse.internalError(res, error);
   }
 });
 
@@ -78,17 +76,14 @@ productRouter.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const product = await ProductApi.getById(id);
-    if (!product) {
-      throw { error: productNotFound };
-    }
-    const productDelete = await ProductApi.deleteById(id);
+    if (!product) return ServerResponse.notFound(res);
 
-    res.json({
-      mensaje: prorductWasDeleted,
-      productoEliminado: product,
-    });
+    await ProductApi.deleteById(id);
+
+    ServerResponse.success(res, product);
   } catch (error) {
-    res.json({ error: error.message });
+    console.log(error);
+    ServerResponse.internalError(res, error);
   }
 });
 
