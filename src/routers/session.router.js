@@ -23,7 +23,6 @@ router.post('/login', passport.authenticate('login', { failureRedirect: '/api/se
 });
 
 router.get('/loginfail', async (req, res) => {
-  console.log('Login failed');
   res.status(500).send({ status: 'error', error: 'Login failed' });
 });
 

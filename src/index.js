@@ -19,6 +19,7 @@ import MongoStore from 'connect-mongo';
 import session from 'express-session';
 import passport from 'passport';
 import initializePassport from './config/passport.config.js';
+import { config } from './config/index.js';
 
 MongoDb.init();
 
@@ -56,7 +57,7 @@ const schemaListMensajes = new schema.Entity('listMensajes', {
 app.use(
   session({
     store: MongoStore.create({
-      mongoUrl: 'mongodb+srv://test:test1234@cluster0.iqc88.mongodb.net/entregable23_24?retryWrites=true&w=majority',
+      mongoUrl: config.UrlMongoDB,
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
       ttl: 600,
     }),

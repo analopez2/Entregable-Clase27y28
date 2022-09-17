@@ -17,6 +17,8 @@ form.addEventListener('submit', (evt) => {
       console.log({ json });
       if (json.status === 'success') {
         location.replace('/login');
+      } else {
+        alert('USER ERROR SIGNUP');
       }
     });
 });

@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 const DEV_PORT = 8080;
 dotenv.config();
 
-const config = {
+export const config = {
   knex: {
     mysql: {
       client: 'mysql',
@@ -27,5 +27,3 @@ const config = {
   selectedDB: process.env.TIPO_DB,
   UrlMongoDB: process.env.URL,
 };
-
-export { config };
