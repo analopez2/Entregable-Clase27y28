@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { ProductService } from '../services/products/products.service.js';
-import { isAdmin } from '../utils/utils.js';
+import { isAdmin } from '../utils.js';
 
 const productsRouter = Router();
 

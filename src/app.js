@@ -1,7 +1,7 @@
 import express from 'express';
 import { config } from './config/config.js';
 import handlebars from 'express-handlebars';
-import __dirname from './utils/utils.js';
+import __dirname from './utils.js';
 import viewsRouter from './routes/views.router.js';
 import sessionRouter from './routes/sessions.router.js';
 import productsRouter from './routes/products.router.js';

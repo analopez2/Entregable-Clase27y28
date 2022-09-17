@@ -1,6 +1,6 @@
 import { ProductsDaoMongoDb } from '../../daos/ProductsDaoMongoDb.js';
 import { errors } from '../../consts/const.js';
-import { productValidation } from '../../utils/utils.js';
+import { productValidation } from '../../utils.js';
 const products = new ProductsDaoMongoDb();
 
 class ProductService {
