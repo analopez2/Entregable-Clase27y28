@@ -14,6 +14,7 @@ import { JOI_VALIDATOR } from './utils/joi-validator.js';
 import { MongoDb } from './db/mongoDb/mongodb.js';
 import { normalize, schema, denormalize } from 'normalizr';
 import sessionsRouter from './routers/session.router.js';
+import infoRouter from './routers/info.router.js';
 import viewsRouter from './routers/views.router.js';
 import MongoStore from 'connect-mongo';
 import session from 'express-session';
@@ -35,8 +36,6 @@ const MensajesApiMongo = new MensajesDaoMongoDb();
 const app = express();
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
-
-const PORT = 8080;
 
 app.use(express.static('public'));
 app.use(express.json());
@@ -198,10 +197,11 @@ io.on('connection', async (socket) => {
 app.use('/', viewsRouter);
 app.use('/api/productos', productRouter);
 app.use('/api/sessions', sessionsRouter);
+app.use('/info', infoRouter);
 
 KnexService.init();
-const server = httpServer.listen(PORT, () => {
-  console.log(`Servidor escuchando en puerto ${PORT}`);
+const server = httpServer.listen(config.server.PORT, () => {
+  console.log(`Servidor escuchando en puerto ${config.server.PORT}`);
 });
 server.on('error', (error) => {
   console.error(`Error en el servidor ${error}`);

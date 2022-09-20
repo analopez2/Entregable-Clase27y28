@@ -1,7 +1,12 @@
 import dotenv from 'dotenv';
-const DEV_PORT = 8080;
+import minimist from 'minimist';
 dotenv.config();
 
+const args = minimist(process.argv.slice(2), {
+  alias: { m: 'MODE', p: 'PORT', d: 'DEBUG' },
+  default: { m: 'dev', p: process.env.PORT_DEFAULT, d: false },
+});
+const { PORT } = args;
 export const config = {
   knex: {
     mysql: {
@@ -22,8 +27,9 @@ export const config = {
     },
   },
   server: {
-    PORT: process.env.PORT || DEV_PORT,
+    PORT: PORT,
   },
   selectedDB: process.env.TIPO_DB,
   UrlMongoDB: process.env.URL,
+  Args: args,
 };

@@ -1,0 +1,25 @@
+<div class="container m-5">
+    <h4 class="m-4">Información general</h4>           
+    <ul>
+        <div class="form-group m-4" >
+            <li><strong class="text-primary">Argumentos:</strong></li>
+            <ul>
+                <li><strong>Port:</strong> {{info.args.PORT}}</li>
+                <li><strong>Mode:</strong> {{info.args.MODE}}</li>
+                <li><strong>Debud:</strong> {{info.args.DEBUG}}</li>                
+                <li><strong>Others:</strong> {{info.args._}}</li>                
+            </ul>
+            <li><strong class="text-primary">Nombre de la plataforma:</strong> {{info.platformName}}</li>
+            <li><strong class="text-primary">Versión de node.js:</strong> {{info.nodeVersion}}</li>
+            <li><strong class="text-primary">Memoria total reservada:</strong></li>
+            <ul>
+                <li><strong>rss:</strong>  {{info.rss.rss}}</li>
+                <li><strong>heapTotal:</strong>  {{info.rss.heapTotal}}</li>
+                <li><strong>heapUsed:</strong>  {{info.rss.heapUsed}}</li>
+                <li><strong>external:</strong>  {{info.rss.external}}</li>        
+                <li><strong>arrayBuffers:</strong>  {{info.rss.arrayBuffers}}</li>        
+            </ul>
+            <li><strong class="text-primary">Path de ejecución:</strong> {{info.nodeVersion}}</li>            
+        </div>
+    </ul>
+</div>
