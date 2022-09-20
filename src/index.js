@@ -15,6 +15,7 @@ import { MongoDb } from './db/mongoDb/mongodb.js';
 import { normalize, schema, denormalize } from 'normalizr';
 import sessionsRouter from './routers/session.router.js';
 import infoRouter from './routers/info.router.js';
+import apiRandom from './routers/apiRandom.router.js';
 import viewsRouter from './routers/views.router.js';
 import MongoStore from 'connect-mongo';
 import session from 'express-session';
@@ -198,6 +199,7 @@ app.use('/', viewsRouter);
 app.use('/api/productos', productRouter);
 app.use('/api/sessions', sessionsRouter);
 app.use('/info', infoRouter);
+app.use('/api/randoms', apiRandom);
 
 KnexService.init();
 const server = httpServer.listen(config.server.PORT, () => {
