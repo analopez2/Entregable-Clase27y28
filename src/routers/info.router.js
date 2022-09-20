@@ -14,7 +14,7 @@ infoRouter.get('/', (req, res) => {
     pid: process.pid,
     cwd: process.cwd(),
   };
-  ServerResponse.success(res, info);
+  res.render('info', { info });
 });
 
 export default infoRouter;
