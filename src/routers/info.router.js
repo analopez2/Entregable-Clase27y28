@@ -15,7 +15,6 @@ infoRouter.get('/', (req, res) => {
     cwd: process.cwd(),
   };
   ServerResponse.success(res, info);
-  console.log(info);
 });
 
 export default infoRouter;
